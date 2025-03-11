@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const addressSearch = document.getElementById('addressSearch')
     const searchBtn = document.getElementById('searchBtn')
-    const AddressSuggestions = document.getElementById('addressSuggestions')
+    const addressSuggestions = document.getElementById('addressSuggestions')
     const streetAddress = document.getElementById('streetAddress')
     const city = document.getElementById('city')
     const state = document.getElementById('state')
@@ -54,7 +54,7 @@ const addressDatabase = [
 
   // Event Listeners
 
-  searchBtn.addEventListener('click',)
+  searchBtn.addEventListener('click',searchAddresses)
   addressSearch.addEventListener('click', function(e){
     if(e.key === 'Enter'){
         searchAddresses()
@@ -65,3 +65,21 @@ const addressDatabase = [
     e.preventDefault()
     alert('Address submitted successfully!')
   })
+
+  const searchAddresses = () => {
+    const query = addressSearch.toLowerCase().trim()
+
+// clear previous suggestions
+    addressSuggestions.innerHTML = ''
+
+// if query is empty return it   
+    if (query === '') return;
+
+    const filterAddresses = addressDatabase.filter(address => {
+        address.street.toLowerCase().includes(query) ||
+        address.city.toLowerCase().includes(query) ||
+        address.state.toLowerCase().includes(query) ||
+        address.zipCode.toLowerCase().includes(query)
+    })
+
+  }
